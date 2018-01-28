@@ -18,17 +18,17 @@ __start: li $2,4
          la $4,opdos
          syscall
          la $4,optres
-         syscall
+         syscall                #Cargamos todos los string, bien formateaditos
          li $2,5
-         syscall
-         move $6,$2
-         bgt $6,4, __start
-         blt $6,0, __start
-         beq $6,1,anadir
-         beq $6,2,buscar
-         beq $6,3,eliminar
+         syscall                #Capturamos el entero
+         move $6,$2             #Movemos el entero a $6
+         bgt $6,4, __start      #Comprobación de argumentos
+         blt $6,0, __start      #Comprobación de argumentos
+         beq $6,1,anadir        #Si es 1 vamos a añadir usuario
+         beq $6,2,buscar        #Si es 2 vamos a buscar usuario
+         beq $6,3,eliminar      #Si es 3 vamos a eliminar usuario
          j fin
-
+##########################Subrutinas del switch##########################
 anadir:  li $2,4
          la $4,string1
          syscall
