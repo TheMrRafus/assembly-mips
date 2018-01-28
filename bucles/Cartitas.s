@@ -52,22 +52,3 @@ atacama:  .asciiz"\n"
 
 
 fin:     .end                                                           
-
-
-                        		
-                        
-        
-
-                        
-                        
-
-                        
-
-
-
-                
-
-   
-     
-
-
