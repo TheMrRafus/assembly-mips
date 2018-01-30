@@ -4,6 +4,8 @@ vocales: .asciiz "aeiou"
 badbunny: .asciiz "La vocal repatida es: "
 ozuna: .asciiz"\n"
 maluma: .space 101
+pregunta: .asciiz "Introduzca una cadena de 100 carcteres maximo.\n\n"
+
 
 .text
 .globl __start
