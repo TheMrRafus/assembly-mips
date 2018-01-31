@@ -31,6 +31,7 @@ pollas: .space 5
 ##
 ##   t0 -- caracter actual de badbunny
 ##   t1 -- caracter actual de vocales
+##FinRegistros
 #badbunnying_loop:
 #    lb      $t0,0($s0)             #Cargamos el caracter de badbuny
 #    addiu   $s0,$s0,1               #sumamos uno a badbunny
