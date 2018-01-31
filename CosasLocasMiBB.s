@@ -93,7 +93,7 @@ pollas: .space 5
 .text
 .globl __start
 __start:
-	li $t0, 0    ##Variable que usamos como contador 
+	li $t0, 0    ##Variable que usamos como contador de vocales
 	li $t5, 5   ##Numero maximo de iteraciones
 	
 	##------Preguntamos la frase y la leemos--------
@@ -109,19 +109,19 @@ __start:
 	##---------------------------------------------------------------------------------------##
 	                                                                                         ##
 	bucle:                                                                                   ##
-		beq $t0, 5, tracaFinal ##Si el contador es 5 finalizamos                         ##
+		beq $t0, 5, tracaFinal ##Si el contador es 5 finalizamos  (imprimimos los resultados)##
 		lb $s0, vocales($t0)   ##Guardamos vocalXvocal en $s0 (static)                   ##     
 		                                                                                 ##
 		                                                                                 ##
 		##-----------Convenio de pila-----------------##                                 ##
-			subu $sp, $sp, $t9                                                       ##
+			subu $sp, $sp, 4                                                       ##
 			##--Restamos 4 posiciones y guardamos el RA($31) actual en la pila       ##
 			move $ra, $sp                                                            ##
 		##--------------------------------------------##                                 ##
 												 ##		
 		 										 ##
 		li $t3,0 ##Usado como contador del bucle repeat-until                            ##
-		li $s1, 0 ##Usado para contar el numero de repeticiones                          ##
+		li $s1, 0 ##Usado para contar el numero de repeticiones de cada letra de la frase##
 		jal comparados  ##Comenzamos el bucle para comparar cada vocal                   ##
 		#####INUSADO########jal guardarResultados                                                  ##
 											         ##
@@ -130,7 +130,7 @@ __start:
 			move $sp, $ra                                                            ##
 			##El RA anterior lo sacamos de la pila y lo                              ##
 			##----------------devolvemos al RA($31)                                  ##
-			addu $sp,$sp, $t9                                                        ##
+			addu $sp,$sp, 4                                                        ##
 		##--------------------------------------------##                                 ##
 											         ##		
 												 ##
