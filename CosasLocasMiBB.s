@@ -40,6 +40,7 @@ pollas: .space 5
 .globl __start
 __start:
 	li $t0, 0    ##Variable que usamos como contador de vocales
+	li $t1, 0
 	li $t5, 5   ##Numero maximo de iteraciones
 	
 	##------Preguntamos la frase y la leemos--------
@@ -69,7 +70,7 @@ __start:
 		li $t3,0 ##Usado como contador del bucle repeat-until                                 ##
 		li $s1, 0 ##Usado para contar el numero de repeticiones de cada letra de la frase     ##
 		jal comparados  ##Comenzamos el bucle para comparar cada vocal  
-		sb $s1, pollas($t0)                      ##
+		sb $s1, pollas($t1)                      ##
 		#####INUSADO########jal guardarResultados                                             ##     
 								          			         ##
 									                         	 ##		
