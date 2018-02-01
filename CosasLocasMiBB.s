@@ -1,78 +1,10 @@
-#################################################################################
-#    .data
-#   vocales:      .asciiz     "aeiou"
-#   maluma: .asciiz     "Mete a BadBunny: "
-#   ozuna:    .asciiz     "El número de vocales es: "
-#   negritoojosclaros:     .asciiz     "\n"
-#   badbunny:        .space      100
-#   pollas: .space 5
-#
-###################################Esto realmente sobraba########################
-#.text
-#    .globl  main
-#main:
-#    #Imprimimos maluma
-#    li      $v0,4
-#    la      $a0,maluma
-#    syscall
-#
-#   #recogemos el string
-#    li      $v0,8
-#    la      $a0,badbunny
-#    li      $a1,100
-#    syscall
-#
-#    li      $s2,0                   # inicializamos las vocales
-#    la      $s0,badbunny                 # apuntando a badbunny
-#
-## registricos:
-##   s0 -- apuntando a el caracter de badbunny
-##   s1 -- apuntando a vocales
-##   s2 -- contador de vocales
-##
-##   t0 -- caracter actual de badbunny
-##   t1 -- caracter actual de vocales
-##FinRegistros
-#badbunnying_loop:
-#    lb      $t0,0($s0)             #Cargamos el caracter de badbuny
-#    addiu   $s0,$s0,1               #sumamos uno a badbunny
-#    beqz    $t0,badbunnybabe       
-#
-#    la      $s1,vocales               
-#
-#vocales_loop:
-#    lb      $t1,0($s1)             #cargamos la vocal a comparar
-#    beqz    $t1,badbunnying_loop         
-#    addiu   $s1,$s1,1               #apuntamos a la siguiente
-#    bne     $t0,$t1,vocales_loop     #Si no es volvemos a empezar
-#    addi    $s2,$s2,1              #añadimos uno
-#    j       badbunnying_loop            
-#
-#badbunnybabe:
-###############################Aquí imprimimos###############################
-#    li      $v0,4
-#    la      $a0,ozuna
-#    syscall
-#
-#
-#    li      $v0,1
-#    move    $a0,$s2
-#    syscall
-#
-#
-#    li      $v0,4
-#    la      $a0,negritoojosclaros
-#    syscall
-#
-#
-#    li      $v0,10
-#    syscall
-#    
-###################################Esto realmente sobraba########################
-
-
 .data
-vocales: .asciiz "aeiou"
+vocales:  .byte 0x61 0x00
+	  .byte 0x65 0x00
+	  .byte 0x69 0x00
+	  .byte 0x6F 0x00
+	  .byte 0x75 0x00
+
 result: .asciiz " se repite "
 resulta2: .asciiz " veces"
 bitParidad: .asciiz "\n-------------------------\n"
@@ -122,8 +54,8 @@ __start:
 	
 	##--------------------------------------------------------------------------------------------##
 	                                                                                              ##
-	bucle:                                                                                        ##
-		beq $t0, 5, tracaFinal ##Si el contador es 5 finalizamos  (imprimimos los resultados) ##
+	bucle:                                                                                      ##
+		beq $t0, 10, tracaFinal ##Si el contador es 5 finalizamos  (imprimimos los resultados) ##
 		lb $s0, vocales($t0)   ##Guardamos vocalXvocal en $s0 (static)                        ##     
 		                                                                                      ##
 		                                                                                      ##
@@ -136,7 +68,8 @@ __start:
 		 										      ##
 		li $t3,0 ##Usado como contador del bucle repeat-until                                 ##
 		li $s1, 0 ##Usado para contar el numero de repeticiones de cada letra de la frase     ##
-		jal comparados  ##Comenzamos el bucle para comparar cada vocal                        ##
+		jal comparados  ##Comenzamos el bucle para comparar cada vocal  
+		sb $s1, pollas($t0)                      ##
 		#####INUSADO########jal guardarResultados                                             ##     
 								          			         ##
 									                         	 ##		
@@ -148,7 +81,7 @@ __start:
 		##--------------------------------------------##                                      ##
 											              ##		
 											     	 ##
-		add $t0,$t0,1                                                                         ##
+		add $t0,$t0,2                                                                         ##
 		j bucle                                                                               ##
 											          	 ##
 	##--------------------------------------------------------------------------------------------##	
@@ -195,52 +128,35 @@ __start:
 	##----------------------------------------------------------##	
 		
 	tracaFinal: 
+		li $t0, 0
+		li $t1, 0
+	segunBadBunny:
 		li $2, 4
-        li $t0, 0
         
 		la $4, bitParidad
 		                        syscall
-		lb $4, vocales($t0)
+		la $4, vocales($t0)
+       		li $2, 4
 		                        syscall 
 		la $4, result
+        	li $2, 4
 		                        syscall
-		lb $4, pollas($t0)
+		lb $4, pollas($t1)
+        	li $2, 1
 		                        syscall
+       		li $2, 4
 		la $4, resulta2
 		                        syscall
 		lb $4, salto
+        	li $2, 1
 		                        syscall
-		addi $t0, $t0,1
-		beq $t0, 5, mae
-		j tracaFinal
+		addi $t0, $t0,2
+		addi $t1, $t1, 1
+		bgt $t0, 10, mae
+		j segunBadBunny
 	
-	imprimirResultados:
-		beq $t0, 0, imprimoa
-		beq $t0, 1, imprimoe
-		beq $t0, 2, imprimoi
-		beq $t0, 3, imprimoo
-		beq $t0, 4, imprimou
+
 		
-	imprimoa:
-		la $4, AAA
-		syscall
-		jr $ra
-	imprimoe:
-		la $4, EEE
-		syscall
-		jr $ra
-	imprimoi:
-		la $4, III
-		syscall
-		jr $ra
-	imprimoo:
-		la $4, OOO
-		syscall
-		jr $ra
-	imprimou:
-		la $4, UUU
-		syscall
-		jr $ra
 	
 	
 	
