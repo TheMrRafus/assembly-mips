@@ -6,7 +6,7 @@ vocales:  .byte 0x61 0x00
 	  .byte 0x75 0x00
 
 result: .asciiz " se repite "
-resulta2: .asciiz " veces"
+resulta2: .asciiz " veces."
 bitParidad: .asciiz "\n-------------------------\n"
 frase: .space 101
 pregunta: .asciiz "Introduzca una frase de 30 caract. max\n\n"
@@ -81,7 +81,7 @@ __start:
 			addu $sp,$sp, 4                                                               ##
 		##--------------------------------------------##                                      ##
 											              ##		
-											     	 ##
+		add $t1,$t1,1							     	 ##
 		add $t0,$t0,2                                                                         ##
 		j bucle                                                                               ##
 											          	 ##
